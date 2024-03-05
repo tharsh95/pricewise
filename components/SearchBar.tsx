@@ -28,7 +28,7 @@ const SearchBar = () => {
     if (!isValidLink) return alert("Please Enter a valid amazon link");
     try {
       setLoading(true);
-     await scrape(searchPrompt)
+    await scrape(searchPrompt)
     } catch (e) {
     } finally {
       setLoading(false);

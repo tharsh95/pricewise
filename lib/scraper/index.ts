@@ -24,13 +24,29 @@ export async function scrapeAmazonData(url: string) {
         const response = await axios.get(url, options)
         const $ = cheerio.load(response.data)
         const title = $('#productTitle').text().trim()
-        const cost = extractPrice($('div.a-section>span.a-price>span>span.a-price-whole'),$('div.a-spacing-none>span.a-price>span.a-offscreen'))
+        const cost = extractPrice($('div.a-section>span.a-price>span>span.a-price-whole'), $('div.a-spacing-none>span.a-price>span.a-offscreen'))
         const originalcost = extractPrice($('span.a-size-small>span.a-price>span.a-offscreen'))
-        const image = $('img#landingImage').attr('data-a-dynamic-image') || '{}'
-        const imageurls = Object.keys(JSON.parse(image))
-        console.log(cost)
+        const images = $('img#landingImage').attr('data-a-dynamic-image') || '{}'
+        const imageurls = Object.keys(JSON.parse(images))
         const outofstock = $('#availability span.a-size-medium').text().trim().toLowerCase() === 'currently unavailable.'
-        // console.log({title,cost,originalcost,image,outofstock,imageurls})
+        const rating = $('a.a-popover-trigger>span.a-size-base').text().trim().replace(/^([^ ]+)/, "")
+        const discountRate = $('.savingsPercentage').text().replace(/[-%]/g, "")
+        const data = {
+            url,
+            title,
+            currency: "₹",
+            currentPrice: +cost || +originalcost,
+            originalPrice: +originalcost || +cost,
+            isOutofStock: outofstock,
+            image: imageurls[0],
+            discountRate: +discountRate,
+            priceHistory: [],
+            rating,
+            lowestPrice: +cost || +originalcost,
+            highestPrice: +cost || +originalcost,
+            averagePrice: +cost || +originalcost,
+        }
+        return data
     }
     catch (e) {
         console.log("failed")
