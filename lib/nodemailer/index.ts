@@ -87,7 +87,7 @@ export const sendEmail = async (emailContent: EmailContent, sendTo: string[]) =>
         port:2525,
         auth:{
             user:'pricetrack@outlook.in',
-            pass:'DKj9C#)V8u4K?=e'
+            pass:process.env.PASSWORD
         },
         maxConnections:1
     })
