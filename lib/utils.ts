@@ -108,7 +108,7 @@ export const getEmailNotifType = (
   if (scrapedProduct.currentPrice < lowestPrice) {
     return Notification.LOWEST_PRICE as keyof typeof Notification;
   }
-  if (!scrapedProduct.isOutOfStock && currentProduct.isOutOfStock) {
+  if (!scrapedProduct.isOutofStock && currentProduct.isOutofStock) {
     return Notification.CHANGE_OF_STOCK as keyof typeof Notification;
   }
   if (scrapedProduct.discountRate >= THRESHOLD_PERCENTAGE) {
