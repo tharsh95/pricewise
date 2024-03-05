@@ -19,7 +19,7 @@ export type PriceHistoryItem = {
     lowestPrice: number;
     averagePrice: number;
     discountRate: number;
-    rating: number;
+    rating: string;
     isOutofStock: Boolean;
     users?: User[];
   };
